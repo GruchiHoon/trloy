@@ -1,0 +1,454 @@
+/* =================================================
+   TRLOY sticky.css  (patched 2026-04-16)
+   - sticky 헤더: 로고 + 브랜드명 + [새 분석] + [합성 과정 ▾] + [편집] + [⚙]
+   - 합성 노트 패널 (디폴트 접힘)
+     · 상단: 큰 썸네일 Preview (분석한 레퍼런스 확인용)
+     · 하단: 4단계 합성 노트
+   - 편집 펼침 영역
+   ================================================= */
+
+.sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(245, 244, 240, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 0.5px solid var(--color-border-subtle);
+}
+
+.sticky-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  height: var(--sticky-height);
+  padding: 0 var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.sticky-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+  min-width: 0;
+}
+
+.sticky-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* -----------------------------------------
+   로고 (클릭 시 빈 상태로 이동)
+   ----------------------------------------- */
+.logo-link {
+  font-family: var(--font-en);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  flex-shrink: 0;
+  padding: 4px 0;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.logo-link:hover {
+  color: var(--color-terracotta);
+  text-decoration: none;
+}
+
+.logo-link:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}
+
+/* -----------------------------------------
+   분석한 레퍼런스 브랜드명 (한 줄, ellipsis)
+   ----------------------------------------- */
+.sticky-brands {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.sticky-brands:empty::before {
+  content: "";
+}
+
+.sticky-brands .brand-sep {
+  color: var(--color-text-tertiary);
+  margin: 0 6px;
+  font-weight: 400;
+}
+
+/* -----------------------------------------
+   [새 분석] 버튼 — 테라코타 테두리형
+   ----------------------------------------- */
+.btn-new-analysis {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-terracotta);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-terracotta);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-new-analysis:hover {
+  background-color: var(--color-terracotta-bg);
+  border-color: var(--color-terracotta-hover);
+  color: var(--color-terracotta-hover);
+}
+
+.btn-new-analysis:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(194, 84, 80, 0.2);
+}
+
+.btn-new-analysis .new-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-terracotta);
+}
+
+.btn-new-analysis:hover .new-dot {
+  background-color: var(--color-terracotta-hover);
+}
+
+/* -----------------------------------------
+   [▾] 합성 과정 토글
+   ----------------------------------------- */
+.btn-toggle-synth {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 10px;
+  background-color: transparent;
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-toggle-synth:hover {
+  border-color: var(--color-border-default);
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.btn-toggle-synth .synth-caret {
+  display: inline-block;
+  transition: transform var(--transition-base);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.btn-toggle-synth[aria-expanded="true"] .synth-caret {
+  transform: rotate(180deg);
+}
+
+/* -----------------------------------------
+   [편집] 버튼
+   ----------------------------------------- */
+.btn-edit {
+  height: 32px;
+  padding: 0 12px;
+  background-color: transparent;
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-edit:hover {
+  border-color: var(--color-border-default);
+  background-color: var(--color-bg-tertiary);
+}
+
+/* -----------------------------------------
+   합성 노트 패널 (디폴트 접힘)
+   ----------------------------------------- */
+.synth-panel {
+  border-top: 0.5px solid var(--color-border-subtle);
+  background-color: var(--color-bg-secondary);
+  overflow: hidden;
+  animation: slideDown 320ms ease-out;
+}
+
+.synth-panel[hidden] {
+  display: none;
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 900px;
+    opacity: 1;
+  }
+}
+
+.synth-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* 레퍼런스 썸네일 프리뷰 */
+.synth-refs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.synth-refs-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.synth-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+.synth-thumbs:empty {
+  display: none;
+}
+
+.synth-thumb {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background-color: var(--color-bg-elevated);
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.synth-thumb:hover {
+  border-color: var(--color-border-default);
+}
+
+.synth-thumb-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: top;
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.synth-thumb-img.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-size: 11px;
+  font-family: var(--font-en);
+  letter-spacing: 0.04em;
+}
+
+.synth-thumb-label {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-en);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 2px;
+}
+
+/* 4단계 합성 노트 */
+.synth-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+.synth-step {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--color-border-subtle);
+}
+
+.synth-step h4 {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-2);
+  letter-spacing: 0.02em;
+}
+
+.synth-step p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .synth-thumbs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .synth-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .synth-inner {
+    padding: var(--space-4);
+  }
+  .synth-thumbs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+  .synth-thumb-img {
+    height: 100px;
+  }
+  .synth-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .sticky-inner {
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .btn-toggle-synth .synth-label,
+  .btn-new-analysis span:last-child,
+  .btn-edit {
+    display: none;
+  }
+
+  .btn-toggle-synth {
+    width: 32px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .btn-new-analysis {
+    width: 32px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+/* -----------------------------------------
+   편집 펼침 영역
+   ----------------------------------------- */
+.edit-panel {
+  background-color: var(--color-bg-secondary);
+  border-bottom: 0.5px solid var(--color-border-subtle);
+  animation: slideDown 280ms ease-out;
+}
+
+.edit-panel[hidden] {
+  display: none;
+}
+
+.edit-panel .container {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+#edit-textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  resize: vertical;
+}
+
+#edit-textarea:focus {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-focus);
+}
+
+.edit-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.edit-thumbs:empty {
+  display: none;
+}
+
+.edit-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  align-items: center;
+}
+
+.edit-actions .btn-primary {
+  height: 40px;
+  padding: 0 var(--space-4);
+  font-size: 14px;
+}
+
+.edit-actions label {
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .edit-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .edit-actions .btn-primary,
+  .edit-actions label,
+  .edit-actions button {
+    width: 100%;
+  }
+}

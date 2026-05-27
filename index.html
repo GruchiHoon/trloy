@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRLOY — Trace your References</title>
+  <meta name="description" content="여러 레퍼런스의 디자인 무드를 하나의 DESIGN.md로 합성합니다.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/empty-state.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/sticky.css">
+
+  <link rel="stylesheet" href="css/section-b.css">
+
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/v3-upgrades.css">
+  <link rel="stylesheet" href="css/v31-modules.css">
+
+</head>
+<body>
+
+  <!-- =============================================
+       상태 1: API 키 설정
+  ============================================= -->
+  <div id="state-settings" class="state-container hidden">
+    <header class="page-header">
+      <div class="logo">TRLOY</div>
+    </header>
+    <main class="settings-wrap">
+      <div class="settings-card">
+        <h1>API 키 설정</h1>
+        <p class="settings-intro">
+          TRLOY는 Claude API를 직접 호출합니다.<br>
+          Anthropic Console에서 발급받은 본인의 API 키를 입력해주세요.
+        </p>
+        <label for="api-key-input" class="settings-label">Anthropic API 키</label>
+        <input type="password" id="api-key-input" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+        <div id="api-key-error" class="settings-error hidden"></div>
+        <p class="settings-hint">이 브라우저에서만 저장됩니다 (localStorage). 서버로 전송되지 않아요.</p>
+        <div class="settings-actions">
+          <button id="btn-save-key" class="btn-primary">저장</button>
+          <button id="btn-delete-key" class="btn-ghost hidden">키 삭제</button>
+          <button id="btn-cancel-settings" class="btn-ghost hidden">취소</button>
+        </div>
+        <div class="settings-help">
+          <p><strong>API 키를 받는 법</strong></p>
+          <ol>
+            <li><a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>에 가입합니다.</li>
+            <li>좌측 메뉴 <em>API Keys</em>에서 새 키를 발급받습니다.</li>
+            <li>발급된 <code>sk-ant-...</code> 키를 위에 붙여넣습니다.</li>
+          </ol>
+        </div>
+
+        <!-- P1: 저장 데이터 관리 -->
+        <div class="settings-storage">
+          <p class="settings-label">저장 데이터</p>
+          <p class="settings-hint">
+            <span id="storage-usage">0</span>건 저장 중
+            (<span id="storage-size">0</span>KB)
+          </p>
+          <button id="btn-clear-drafts" class="btn-ghost">전체 삭제</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- =============================================
+       상태 2: 빈 상태
+  ============================================= -->
+  <div id="state-empty" class="state-container hidden">
+    <header class="page-header">
+      <div class="logo">TRLOY</div>
+      <button id="btn-settings" class="icon-btn" aria-label="설정">⚙</button>
+    </header>
+    <main class="empty-hero">
+      <div class="empty-tag">
+        <span class="empty-tag-dot"></span>
+        Trace · Merge · Prompt
+      </div>
+      <h1 class="empty-headline">
+        <span class="empty-line empty-anim-1">Trace your</span>
+        <span class="empty-line empty-anim-2">References</span>
+      </h1>
+      <p class="empty-sub empty-anim-3">여러 레퍼런스의 디자인 무드를 하나의 DESIGN.md로 합성합니다.</p>
+
+      <div class="input-area empty-anim-4">
+        <textarea
+          id="input-textarea"
+          placeholder="분석할 사이트 URL을 붙여넣으세요.&#10;자연어 의도를 함께 쓰면 가중치에 반영됩니다.&#10;&#10;https://toss.im&#10;https://linear.app"
+          rows="5"
+        ></textarea>
+        <div class="input-hint" id="input-hint">URL 또는 이미지를 1개 이상 추가해주세요.</div>
+        <div class="input-thumbs" id="input-thumbs"></div>
+        <div class="input-actions">
+          <label for="input-file" class="btn-secondary">
+            📎 이미지 첨부
+            <input type="file" id="input-file" accept="image/*" multiple hidden>
+          </label>
+          <!-- P5: FRLOY .md 가져오기 -->
+          <button class="btn-frloy-import" id="btn-frloy-import">
+            📂 FRLOY .md
+            <input type="file" id="frloy-file-input" accept=".md,.txt" hidden>
+          </button>
+          <button id="btn-analyze" class="btn-primary" disabled>레퍼런스 분석</button>
+        </div>
+      </div>
+
+      <!-- P1: 저장된 분석 카드 리스트 -->
+      <div class="drafts-section" id="drafts-section" style="display:none">
+        <div class="drafts-header">
+          <span class="drafts-title">저장된 분석</span>
+          <span class="drafts-count" id="drafts-count"></span>
+        </div>
+        <div class="drafts-list" id="drafts-list" role="list"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- =============================================
+       상태 3: 결과 (D안 풀너비 스택)
+  ============================================= -->
+  <div id="state-result" class="state-container hidden">
+
+    <!-- sticky 헤더 -->
+    <div class="sticky-bar">
+      <div class="sticky-inner">
+        <div class="sticky-left">
+          <a href="#" class="logo logo-link" id="logo-link" aria-label="처음 화면으로">TRLOY</a>
+          <div class="sticky-brands" id="sticky-brands"></div>
+        </div>
+        <div class="sticky-right">
+          <!-- P1: 저장 버튼 -->
+          <button class="btn-save-draft" id="btn-save-draft">
+            <span class="save-dot"></span>
+            <span>저장</span>
+          </button>
+          <button class="btn-new-analysis" id="btn-new-analysis" aria-label="새로운 레퍼런스로 분석">
+            <span class="new-dot" aria-hidden="true"></span>
+            <span>새 분석</span>
+          </button>
+          <button class="btn-toggle-synth" id="btn-toggle-synth" aria-expanded="false" aria-controls="synth-panel" aria-label="합성 과정 보기">
+            <span class="synth-label">합성 과정</span>
+            <span class="synth-caret">▾</span>
+          </button>
+          <button class="btn-edit" id="btn-edit">편집</button>
+          <button class="icon-btn" id="btn-settings-from-result" aria-label="설정">⚙</button>
+        </div>
+      </div>
+      <!-- 합성 노트 패널 -->
+      <div class="synth-panel" id="synth-panel" hidden>
+        <div class="synth-inner">
+          <div class="synth-refs" id="synth-refs">
+            <h4 class="synth-refs-title">분석한 레퍼런스</h4>
+            <div class="synth-thumbs" id="synth-thumbs"></div>
+          </div>
+          <div class="synth-grid">
+            <div class="synth-step" data-step="1"><h4>1. 공통 추출</h4><p id="synth-common">—</p></div>
+            <div class="synth-step" data-step="2"><h4>2. 차이 식별</h4><p id="synth-diff">—</p></div>
+            <div class="synth-step" data-step="3"><h4>3. 우선순위</h4><p id="synth-priority">—</p></div>
+            <div class="synth-step" data-step="4"><h4>4. 충돌 해소</h4><p id="synth-conflict">—</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 편집 펼침 영역 -->
+    <div class="edit-panel" id="edit-panel" hidden>
+      <div class="container">
+        <textarea id="edit-textarea" rows="4"></textarea>
+        <div class="edit-thumbs" id="edit-thumbs"></div>
+        <div class="edit-actions">
+          <label for="edit-file" class="btn-secondary">
+            📎 이미지 추가
+            <input type="file" id="edit-file" accept="image/*" multiple hidden>
+          </label>
+          <button id="btn-analyze-again" class="btn-primary">🎯 다시 분석</button>
+          <button id="btn-cancel-edit" class="btn-ghost">취소</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 에러 박스 -->
+    <div class="error-box hidden" id="error-box">
+      <div class="container">
+        <p id="error-message">분석 중 문제가 발생했어요. 다시 시도해주세요.</p>
+        <details class="error-raw-toggle" id="error-raw-wrap" hidden>
+          <summary>원본 응답 보기</summary>
+          <pre class="error-raw" id="error-raw"></pre>
+        </details>
+        <div class="error-actions">
+          <button id="btn-retry" class="btn-secondary">다시 시도</button>
+          <button id="btn-error-back" class="btn-secondary">입력으로 돌아가기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 결과 본문: D안 풀너비 스택 ═══ -->
+    <div class="container" style="padding-bottom:96px">
+
+      <!-- ── B 섹션: 정체성 (풀너비) ── -->
+      <section class="section-b-fullwidth" id="section-b">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:var(--space-4);margin-top:var(--space-3)">
+          <button class="btn-prompt-convert" id="btn-prompt-convert" aria-label="AI 프롬프트 변환 보기">
+            <span>프롬프트 변환</span>
+          </button>
+        </div>
+        <h2 class="vibe-headline" id="vibe-headline"></h2>
+        <p class="vibe-atmosphere" id="vibe-atmosphere"></p>
+        <div class="chips-and-swatches">
+          <div class="chips" id="vibe-chips"></div>
+          <div class="swatches" id="vibe-swatches"></div>
+        </div>
+        <div class="blocks">
+          <div class="block" data-block="1">
+            <h3><span class="block-num">1</span> 디자인 컨셉 · 철학</h3>
+            <div id="block-1"></div>
+          </div>
+          <div class="block" data-block="2">
+            <h3><span class="block-num">2</span> 감정 · 타겟 · 업종</h3>
+            <div id="block-2"></div>
+          </div>
+          <div class="block" data-block="3">
+            <h3><span class="block-num">3</span> 포지션</h3>
+            <div id="block-3"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── P2: Preview ── -->
+      <section class="preview-section" id="preview-section">
+        <div class="preview-title-row">
+          <span class="preview-title">Preview</span>
+          <div class="preview-tab-right">
+            <div class="theme-toggle" id="theme-toggle">
+              <button class="theme-btn active" data-theme="light">☀ Light</button>
+              <button class="theme-btn" data-theme="dark">☽ Dark</button>
+            </div>
+            <button class="prompt-copy-btn" id="btn-download-catalog">다운로드</button>
+          </div>
+        </div>
+        <div class="preview-tab-bar">
+          <div class="preview-tab-group">
+            <button class="pv-tab active" data-pv-tab="live"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="10" rx="2"/><line x1="5" y1="14" x2="11" y2="14"/></svg> Live Preview</button>
+            <button class="pv-tab" data-pv-tab="designmd"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 1h8l3 3v11H1V1z"/><line x1="5" y1="6" x2="11" y2="6"/><line x1="5" y1="9" x2="9" y2="9"/></svg> DESIGN.md</button>
+            <button class="pv-tab" data-pv-tab="figma-make"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><rect x="1" y="1" width="14" height="14" rx="2"/></svg> Figma Make</button>
+            <button class="pv-tab" data-pv-tab="cursor"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,2 4,14"/><polyline points="7,5 12,5"/><polyline points="7,8 11,8"/><polyline points="7,11 10,11"/></svg> Cursor Rules</button>
+            <button class="pv-tab" data-pv-tab="claude-code"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4,5 1,8 4,11"/><polyline points="12,5 15,8 12,11"/><line x1="10" y1="2" x2="6" y2="14"/></svg> Claude Code</button>
+            <button class="pv-tab" data-pv-tab="stitch-v2"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3,13 L13,3"/><circle cx="3" cy="13" r="1.5"/><circle cx="13" cy="3" r="1.5"/></svg> Stitch v2</button>
+          </div>
+        </div>
+        <div class="preview-wrap" id="preview-wrap-live">
+          <div class="catalog-embed" id="catalog-container"></div>
+        </div>
+        <div class="preview-text-wrap hidden" id="preview-wrap-text">
+          <div class="preview-text-header">
+            <span class="preview-text-filename" id="preview-text-filename"></span>
+            <button class="preview-text-copy-btn" id="btn-pv-copy">📋 복사</button>
+          </div>
+          <pre class="preview-text-body" id="preview-text-body"></pre>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- =============================================
+       모달 (공통)
+  ============================================= -->
+  <div id="modal-overlay" class="modal-overlay hidden" aria-hidden="true">
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-header">
+        <h2 id="modal-title" class="modal-title"></h2>
+        <div class="modal-actions">
+          <button id="modal-copy" class="modal-icon-btn" aria-label="복사">
+            <span class="copy-icon">📋</span>
+            <span class="copy-text">복사</span>
+          </button>
+          <button id="modal-close" class="modal-icon-btn" aria-label="닫기">×</button>
+        </div>
+      </header>
+      <div id="modal-note" class="modal-note" hidden></div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       토스트
+  ============================================= -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- =============================================
+       로딩 오버레이
+  ============================================= -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="loading-inner">
+      <div class="loading-spinner"></div>
+      <p id="loading-message">레퍼런스를 분석하고 있어요...</p>
+      <div class="loading-synth-live" id="loading-synth-live">
+        <div class="loading-synth-step" id="ls-step-1"><span class="ls-num">1</span><span class="ls-label">공통 추출</span><span class="ls-dot" id="ls-dot-1"></span></div>
+        <div class="loading-synth-step" id="ls-step-2"><span class="ls-num">2</span><span class="ls-label">차이 식별</span><span class="ls-dot" id="ls-dot-2"></span></div>
+        <div class="loading-synth-step" id="ls-step-3"><span class="ls-num">3</span><span class="ls-label">우선순위</span><span class="ls-dot" id="ls-dot-3"></span></div>
+        <div class="loading-synth-step" id="ls-step-4"><span class="ls-num">4</span><span class="ls-label">충돌 해소</span><span class="ls-dot" id="ls-dot-4"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       JS 로드 순서
+  ============================================= -->
+  <script src="js/01-config.js"></script>
+  <script src="js/prompts.js"></script>
+  <script src="js/02-input.js"></script>
+  <script src="js/04-thumio.js"></script>
+  <script src="js/08-snippets.js"></script>
+  <script src="js/06-modal.js"></script>
+  <script src="js/07-export.js"></script>
+  <script src="js/09-settings.js"></script>
+  <script src="js/03-analyze.js"></script>
+  <script src="js/05-render.js"></script>
+  <script src="js/11-drafts.js"></script>
+  <script src="js/12-preview.js"></script>
+  <script src="js/10-app.js"></script>
+</body>
+</html>

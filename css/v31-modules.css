@@ -1,0 +1,452 @@
+/* =================================================
+   TRLOY v3.2 css/v31-modules.css
+   P1 저장 카드 · P2 Preview · P3 프롬프트
+   ================================================= */
+
+/* ── P1: 저장 카드 리스트 (state-empty) ── */
+.drafts-section {
+  width: 100%;
+  max-width: 600px;
+  margin-top: var(--space-6);
+}
+
+.drafts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.drafts-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.drafts-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+}
+
+.drafts-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.draft-card {
+  display: flex;
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-bg-elevated);
+  transition: border-color var(--transition-fast);
+}
+
+.draft-card:hover {
+  border-color: var(--color-border-default);
+}
+
+.draft-strip {
+  width: 6px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.draft-strip-seg {
+  flex: 1;
+}
+
+.draft-body {
+  flex: 1;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.draft-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.draft-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.draft-meta {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.draft-chips {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.draft-chip {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+}
+
+.draft-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.draft-btn {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--color-border-subtle);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.draft-btn:hover {
+  border-color: var(--color-border-default);
+  color: var(--color-text-primary);
+}
+
+.draft-btn-load {
+  background-color: var(--color-terracotta-bg);
+  color: var(--color-terracotta);
+  border-color: rgba(194, 84, 80, 0.15);
+  font-weight: 500;
+}
+
+.draft-btn-load:hover {
+  background-color: rgba(194, 84, 80, 0.15);
+  border-color: rgba(194, 84, 80, 0.3);
+}
+
+.draft-btn-del {
+  padding: 6px 10px;
+  color: var(--color-text-tertiary);
+}
+
+.draft-btn-del:hover {
+  color: var(--color-danger);
+}
+
+/* ── P1: 저장 버튼 (sticky bar) ── */
+.btn-save-draft {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 16px;
+  background-color: var(--color-terracotta-bg);
+  border: 1px solid rgba(194, 84, 80, 0.2);
+  border-radius: var(--radius-full);
+  color: var(--color-terracotta);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-save-draft:hover {
+  background-color: rgba(194, 84, 80, 0.15);
+  border-color: rgba(194, 84, 80, 0.35);
+}
+
+.btn-save-draft.saved {
+  background-color: rgba(12, 229, 160, 0.1);
+  border-color: rgba(12, 229, 160, 0.3);
+  color: var(--color-success);
+}
+
+.save-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-terracotta);
+}
+
+.btn-save-draft.saved .save-dot {
+  background-color: var(--color-success);
+}
+
+/* ── P2: Preview 섹션 ── */
+.preview-section {
+  margin-top: var(--space-8);
+  display: none;
+}
+
+.preview-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.preview-title {
+  font-family: var(--font-en);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.preview-tab-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.preview-tab-group {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.pv-tab {
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  border: 0.5px solid var(--color-border-subtle);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pv-tab svg {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.pv-tab:hover {
+  border-color: var(--color-border-default);
+  color: var(--color-text-secondary);
+}
+
+.pv-tab.active {
+  background: var(--color-terracotta-bg);
+  border-color: rgba(194, 84, 80, 0.2);
+  color: var(--color-terracotta);
+  font-weight: 500;
+}
+
+.pv-tab.active svg {
+  opacity: 1;
+}
+
+.preview-tab-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle {
+  display: flex;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.theme-btn {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  padding: 5px 12px;
+  border: 0.5px solid var(--color-border-subtle);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-btn:first-child {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.theme-btn:last-child {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-left: -1px;
+}
+
+.theme-btn.active {
+  background: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border-color: var(--color-text-primary);
+}
+
+.preview-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.preview-wrap {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.catalog-embed {
+  width: 100%;
+}
+
+.preview-text-wrap {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.preview-text-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: var(--color-bg-tertiary);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.preview-text-filename {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
+}
+
+.preview-text-copy-btn {
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  border: 0.5px solid var(--color-border-subtle);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preview-text-copy-btn:hover {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.preview-text-body {
+  background: var(--color-bg-secondary);
+  padding: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* ── P3: 프롬프트 패널 ── */
+/* P3 prompt-section — 삭제됨 (v3.4) */
+
+/* ── B 섹션: 풀너비 레이아웃 (D안) ── */
+.section-b-fullwidth {
+  margin-bottom: var(--space-8);
+}
+
+.section-b-fullwidth .section-b-header {
+  border: none;
+  border-bottom: none;
+  margin-bottom: var(--space-4);
+}
+
+.section-b-fullwidth .vibe-headline {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
+}
+
+.section-b-fullwidth .vibe-atmosphere {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  max-width: 720px;
+  margin-bottom: var(--space-4);
+}
+
+.section-b-fullwidth .chips-and-swatches {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+.section-b-fullwidth .blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.section-b-fullwidth .block {
+  border-top: none;
+}
+
+@media (max-width: 900px) {
+  .section-b-fullwidth .blocks {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* E 섹션 + C 카드 — 삭제됨 (v3.4) */
+
+/* ── FRLOY import 버튼 ── */
+.btn-frloy-import {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 0.5px solid var(--color-border-subtle);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-frloy-import:hover {
+  border-color: var(--color-border-default);
+  color: var(--color-text-primary);
+}
+
+/* ── 설정: 저장 데이터 관리 ── */
+.settings-storage {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 0.5px solid var(--color-border-subtle);
+}

@@ -1,0 +1,174 @@
+/* =================================================
+   TRLOY v3 — UI 인식 개선
+   1. 로딩 중 합성 프레임 실시간 표시
+   2. 카드 정보 밀도 향상
+   포인트 컬러: 테라코타 (#C25450) 통일
+   ================================================= */
+
+/* -------------------------------------------------
+   1. 로딩 합성 프레임 (실시간)
+   ------------------------------------------------- */
+.loading-synth-live {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  justify-content: center;
+}
+
+.loading-synth-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  transition: all var(--transition-base);
+}
+
+.loading-synth-step.active {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+  background-color: var(--color-bg-elevated);
+}
+
+.loading-synth-step.done {
+  color: var(--color-terracotta);
+  border-color: rgba(194, 84, 80, 0.3);
+  background-color: rgba(194, 84, 80, 0.05);
+}
+
+.ls-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-bg-tertiary);
+  font-size: 10px;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+}
+
+.loading-synth-step.active .ls-num {
+  background-color: var(--color-text-primary);
+  color: var(--color-text-inverse);
+}
+
+.loading-synth-step.done .ls-num {
+  background-color: var(--color-terracotta);
+  color: white;
+}
+
+.ls-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: transparent;
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+}
+
+.loading-synth-step.active .ls-dot {
+  background-color: var(--color-text-primary);
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+.loading-synth-step.done .ls-dot {
+  background-color: var(--color-terracotta);
+  animation: none;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+@media (max-width: 640px) {
+  .loading-synth-live {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .ls-label { display: none; }
+  .loading-synth-step { padding: 6px 8px; }
+}
+
+/* -------------------------------------------------
+   2. 카드 밀도 향상
+   ------------------------------------------------- */
+
+/* 컬러 카드 — 스와치 더 크게, 5개 전부 표시 */
+.card[data-card="1"] .card-color-item {
+  width: 100%;
+}
+
+.card[data-card="1"] .card-color-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.card[data-card="1"] .card-color-role {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* 타이포 카드 — 폰트 미리보기 더 크게 */
+.card[data-card="2"] .typo-preview {
+  font-size: 16px;
+  padding: 6px 0;
+  border-bottom: 0.5px solid var(--color-border-subtle);
+  margin-bottom: 6px;
+}
+
+/* 컴포넌트 카드 — 버튼 미리보기 */
+.card[data-card="3"] .comp-preview {
+  padding: 6px 14px;
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+
+/* 깊이 카드 — shadow 미리보기 더 크게 */
+.card[data-card="5"] .shadow-preview {
+  height: 28px;
+  margin-top: 6px;
+  border: 0.5px solid var(--color-border-subtle);
+}
+
+/* 규칙 카드 — do/dont 전부 표시 */
+.card[data-card="6"] .rules-line {
+  padding: 2px 0;
+}
+
+.card[data-card="6"] .rules-text {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* -------------------------------------------------
+   3. 카드 헤더 (번호 + expand 아이콘)
+   ------------------------------------------------- */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.card-expand-icon {
+  color: var(--color-text-tertiary);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.card:hover .card-expand-icon {
+  opacity: 0.6;
+}

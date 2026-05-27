@@ -1,0 +1,295 @@
+/* =================================================
+   TRLOY section-b.css
+   B 섹션 — 정체성 (33% 폭)
+   - Vibe One-liner
+   - 칩 + 스와치 (한 줄)
+   - 3블록 (1·2·3)
+   - 우측 상단 [프롬프트 변환] 버튼
+   ================================================= */
+
+.bc-container {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-8);
+}
+
+.bc-layout {
+  display: grid;
+  grid-template-columns: 33% 1fr;
+  gap: var(--space-5);
+  align-items: flex-start;
+}
+
+@media (max-width: 1023px) {
+  .bc-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.section-b {
+  position: relative;
+  padding: var(--space-5);
+  background-color: var(--color-bg-elevated);
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.section-b-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--space-4);
+  border-bottom: 0.5px solid var(--color-border-subtle);
+  margin-bottom: var(--space-4);
+  gap: var(--space-3);
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.section-label::first-letter {
+  color: var(--color-text-primary);
+}
+
+/* -----------------------------------------
+   [프롬프트 변환] 버튼 (§12A.7)
+   ----------------------------------------- */
+.btn-prompt-convert {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 10px;
+  background-color: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.btn-prompt-convert::before {
+  content: "</>";
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  letter-spacing: -0.02em;
+}
+
+.btn-prompt-convert:hover {
+  border-color: var(--color-border-default);
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.btn-prompt-convert:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* -----------------------------------------
+   Vibe headline (One-liner)
+   ----------------------------------------- */
+.vibe-headline {
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.005em;
+}
+
+.vibe-headline:empty::before {
+  content: "Vibe 분석 대기 중";
+  color: var(--color-text-tertiary);
+  font-weight: 400;
+}
+
+.vibe-atmosphere {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+/* -----------------------------------------
+   칩 + 스와치 (한 줄)
+   ----------------------------------------- */
+.chips-and-swatches {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: 0.5px solid var(--color-border-subtle);
+  border-bottom: 0.5px solid var(--color-border-subtle);
+  margin-bottom: var(--space-4);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background-color: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.swatches {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 0.5px solid var(--color-border-subtle);
+  cursor: default;
+}
+
+/* -----------------------------------------
+   블록 1·2·3
+   ----------------------------------------- */
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.block {
+  padding-top: var(--space-3);
+}
+
+.block:not(:first-child) {
+  border-top: 0.5px solid var(--color-border-subtle);
+}
+
+.block h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.block-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+}
+
+.block p,
+.block div {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.block .meta-row {
+  display: flex;
+  gap: var(--space-3);
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.block .meta-label {
+  color: var(--color-text-tertiary);
+  min-width: 52px;
+  flex-shrink: 0;
+}
+
+.block .meta-value {
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.block .emotions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--space-1);
+}
+
+.block .emotion-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  color: var(--color-text-primary);
+}
+
+/* -----------------------------------------
+   스켈레톤 (B 섹션)
+   ----------------------------------------- */
+.section-b.loading .vibe-headline,
+.section-b.loading .vibe-atmosphere,
+.section-b.loading .chip,
+.section-b.loading .swatch,
+.section-b.loading .block p,
+.section-b.loading .block div {
+  position: relative;
+}
+
+.section-b.loading .vibe-headline::after {
+  content: "";
+  display: block;
+  height: 48px;
+  margin-top: -24px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-tertiary) 0%,
+    var(--color-bg-secondary) 50%,
+    var(--color-bg-tertiary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+  .section-b {
+    padding: var(--space-4);
+  }
+
+  .vibe-headline {
+    font-size: 18px;
+  }
+
+  .btn-prompt-convert span {
+    display: none;
+  }
+}

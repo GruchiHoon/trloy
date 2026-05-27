@@ -1,0 +1,355 @@
+/* =================================================
+   TRLOY empty-state.css (v3 — 모션 + 임팩트)
+   빈 상태: 태그 + 2줄 헤드라인 + textarea + 예시 칩 + 피처 스트립
+   Stitch/Scraper급 첫인상 — 라이트 테마 유지
+   ================================================= */
+
+#state-empty {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4) var(--space-8);
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+/* ── 태그 라벨 ── */
+.empty-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  background-color: var(--color-terracotta-bg);
+  border: 1px solid rgba(194, 84, 80, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-terracotta);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-5);
+  animation: emptyFadeUp 0.6s ease both;
+  animation-delay: 0.05s;
+}
+
+.empty-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-terracotta);
+  animation: tagPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes tagPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* ── 헤드라인 (2줄 분리 — 개별 모션) ── */
+.empty-headline {
+  font-family: var(--font-en);
+  font-size: clamp(48px, 7vw, 68px);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.empty-line {
+  display: block;
+}
+
+/* ── 서브 카피 ── */
+.empty-sub {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+  max-width: 480px;
+}
+
+/* ── 입력 영역 ── */
+.input-area {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+#input-textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 18px 20px;
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+#input-textarea::placeholder {
+  color: var(--color-text-tertiary);
+  line-height: 1.55;
+}
+
+#input-textarea:focus {
+  border-color: var(--color-terracotta);
+  box-shadow: 0 0 0 3px rgba(194, 84, 80, 0.1);
+  transform: translateY(-1px);
+}
+
+#input-textarea.drag-over {
+  border-color: var(--color-terracotta);
+  border-style: dashed;
+  background-color: var(--color-terracotta-bg);
+}
+
+.input-hint {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  text-align: left;
+  padding: 0 var(--space-1);
+}
+
+.input-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0 var(--space-1);
+  min-height: 0;
+}
+
+.input-thumbs:empty {
+  display: none;
+}
+
+.thumb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 10px 6px 6px;
+  background-color: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  max-width: 260px;
+}
+
+.thumb-chip img {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.thumb-chip .thumb-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.thumb-chip .thumb-remove {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--color-text-tertiary);
+  font-size: 14px;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.thumb-chip .thumb-remove:hover {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.input-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.input-actions .btn-secondary {
+  cursor: pointer;
+}
+
+.input-actions .btn-primary {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ── 예시 칩 (클릭 → textarea 채움) ── */
+.empty-examples {
+  display: flex;
+  gap: 8px;
+  margin-top: var(--space-5);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.example-chip {
+  padding: 7px 16px;
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+
+.example-chip:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+  background-color: var(--color-terracotta-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(194, 84, 80, 0.08);
+}
+
+.example-chip:active {
+  transform: translateY(0);
+}
+
+/* ── 피처 스트립 (하단 3열) ── */
+.empty-features {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: var(--space-8);
+  padding: 14px 0;
+  border-top: 0.5px solid var(--color-border-subtle);
+  width: 100%;
+  max-width: 480px;
+  justify-content: center;
+}
+
+.empty-feat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex: 1;
+}
+
+.feat-num {
+  font-family: var(--font-en);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.feat-label {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+.feat-divider {
+  width: 1px;
+  height: 28px;
+  background-color: var(--color-border-subtle);
+  flex-shrink: 0;
+}
+
+/* ── 입장 애니메이션 (stagger) ── */
+@keyframes emptyFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.empty-anim-1 { animation: emptyFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: 0.1s; }
+.empty-anim-2 { animation: emptyFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: 0.2s; }
+.empty-anim-3 { animation: emptyFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: 0.32s; }
+.empty-anim-4 { animation: emptyFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: 0.44s; }
+.empty-anim-5 { animation: emptyFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: 0.56s; }
+.empty-anim-6 { animation: emptyFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: 0.68s; }
+
+/* ── 반응형 ── */
+@media (max-width: 640px) {
+  .empty-hero {
+    padding: var(--space-6) var(--space-4);
+    justify-content: flex-start;
+    padding-top: var(--space-8);
+  }
+
+  .empty-headline {
+    font-size: 42px;
+    line-height: 1.08;
+  }
+
+  .empty-sub {
+    font-size: 15px;
+  }
+
+  .input-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .input-actions .btn-primary {
+    width: 100%;
+  }
+
+  .empty-features {
+    max-width: 100%;
+  }
+
+  .feat-label {
+    font-size: 10px;
+  }
+}
+
+/* ── prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .empty-tag,
+  .empty-anim-1,
+  .empty-anim-2,
+  .empty-anim-3,
+  .empty-anim-4,
+  .empty-anim-5,
+  .empty-anim-6 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .empty-tag-dot {
+    animation: none !important;
+  }
+}
