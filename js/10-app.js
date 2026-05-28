@@ -111,13 +111,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Firebase Auth 초기화 → 로그인 확인 후 앱 시작 */
   if (typeof initAuth === 'function') {
-    initAuth((user) => {
+    initAuth(async (user) => {
+      // API 키 Firestore에서 자동 로드
+      if (typeof fetchAndSetApiKey === 'function') {
+        await fetchAndSetApiKey();
+      }
       bootstrapState();
       // 로그인 후 클라우드 드래프트 동기화
       if (typeof syncDraftsFromCloud === 'function') {
         syncDraftsFromCloud();
       }
-      // 분석 완료 시 히스토리 기록 (result 렌더 이후)
       window._authUser = user;
     });
   } else {

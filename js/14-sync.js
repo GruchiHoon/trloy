@@ -4,6 +4,29 @@
    ================================================= */
 
 /* -------------------------------------------------
+   API 키 — Firestore에서 불러와 자동 설정
+   ------------------------------------------------- */
+async function fetchAndSetApiKey() {
+  if (!window.firebaseDb) return;
+
+  try {
+    const doc = await window.firebaseDb
+      .collection('settings')
+      .doc('config')
+      .get();
+
+    if (doc.exists) {
+      const key = doc.data().anthropicKey;
+      if (key && validateApiKeyFormat(key)) {
+        setApiKey(key);
+      }
+    }
+  } catch (err) {
+    console.error('[sync] API 키 불러오기 실패:', err);
+  }
+}
+
+/* -------------------------------------------------
    Drafts — 클라우드 → 로컬 병합
    ------------------------------------------------- */
 async function syncDraftsFromCloud() {
