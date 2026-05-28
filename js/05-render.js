@@ -72,6 +72,11 @@ function renderResult(data) {
 
   /* P2 프리뷰 */
   if (typeof renderPreviewSection === 'function') renderPreviewSection(data);
+
+  /* 히스토리 기록 (로그인 시) */
+  if (typeof saveHistoryEntry === 'function' && window.lastAnalyzedInputs) {
+    saveHistoryEntry(window.lastAnalyzedInputs, data);
+  }
 }
 
 /* -------------------------------------------------

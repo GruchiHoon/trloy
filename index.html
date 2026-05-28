@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="css/modal.css">
   <link rel="stylesheet" href="css/v3-upgrades.css">
   <link rel="stylesheet" href="css/v31-modules.css">
+  <link rel="stylesheet" href="css/auth.css">
 
 </head>
 <body>
@@ -76,7 +77,13 @@
   <div id="state-empty" class="state-container hidden">
     <header class="page-header">
       <div class="logo">TRLOY</div>
-      <button id="btn-settings" class="icon-btn" aria-label="설정">⚙</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="user-badge" style="display:none">
+          <span class="user-badge-email"></span>
+          <button class="btn-logout">로그아웃</button>
+        </div>
+        <button id="btn-settings" class="icon-btn" aria-label="설정">⚙</button>
+      </div>
     </header>
     <main class="empty-hero">
       <div class="empty-tag">
@@ -149,6 +156,10 @@
             <span class="synth-caret">▾</span>
           </button>
           <button class="btn-edit" id="btn-edit">편집</button>
+          <div class="user-badge" style="display:none">
+            <span class="user-badge-email"></span>
+            <button class="btn-logout">로그아웃</button>
+          </div>
           <button class="icon-btn" id="btn-settings-from-result" aria-label="설정">⚙</button>
         </div>
       </div>
@@ -290,6 +301,31 @@
   </div>
 
   <!-- =============================================
+       로그인 모달
+  ============================================= -->
+  <div id="auth-modal" class="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo">TRLOY</div>
+        <span class="auth-tag">
+          <span class="auth-tag-dot"></span>
+          Trace · Merge · Prompt
+        </span>
+      </div>
+      <div class="auth-form-wrap">
+        <p class="auth-form-title">로그인</p>
+        <label class="auth-label" for="auth-email">이메일</label>
+        <input type="email" id="auth-email" class="auth-input" placeholder="이메일 주소" autocomplete="email">
+        <label class="auth-label" for="auth-password">비밀번호</label>
+        <input type="password" id="auth-password" class="auth-input" placeholder="비밀번호" autocomplete="current-password">
+        <div id="auth-error" class="auth-error hidden"></div>
+        <button id="auth-login-btn" class="auth-btn">로그인</button>
+      </div>
+      <p class="auth-hint">초대받은 계정으로만 로그인할 수 있어요.</p>
+    </div>
+  </div>
+
+  <!-- =============================================
        토스트
   ============================================= -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
@@ -313,6 +349,11 @@
   <!-- =============================================
        JS 로드 순서
   ============================================= -->
+  <!-- Firebase SDK (compat — 전역 firebase 객체 제공) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
   <script src="js/01-config.js"></script>
   <script src="js/prompts.js"></script>
   <script src="js/02-input.js"></script>
@@ -325,6 +366,8 @@
   <script src="js/05-render.js"></script>
   <script src="js/11-drafts.js"></script>
   <script src="js/12-preview.js"></script>
+  <script src="js/13-auth.js"></script>
+  <script src="js/14-sync.js"></script>
   <script src="js/10-app.js"></script>
 </body>
 </html>

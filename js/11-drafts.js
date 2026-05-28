@@ -77,6 +77,11 @@ function saveDraft(inputs, result) {
 
   try {
     localStorage.setItem(STORAGE_KEY_DRAFTS, JSON.stringify(drafts));
+    // 클라우드 동기화 (로그인 시)
+    const savedDraft = existing || drafts[0];
+    if (typeof pushDraftToCloud === 'function' && savedDraft) {
+      pushDraftToCloud(savedDraft);
+    }
   } catch {
     drafts.pop();
     try {
@@ -96,6 +101,10 @@ function saveDraft(inputs, result) {
 function deleteDraft(id) {
   const drafts = getDrafts().filter((d) => d.id !== id);
   localStorage.setItem(STORAGE_KEY_DRAFTS, JSON.stringify(drafts));
+  // 클라우드 동기화 (로그인 시)
+  if (typeof deleteDraftFromCloud === 'function') {
+    deleteDraftFromCloud(id);
+  }
   renderDraftList();
   showToast('삭제했어요.');
 }

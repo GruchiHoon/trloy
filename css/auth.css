@@ -1,0 +1,250 @@
+/* =================================================
+   TRLOY css/auth.css
+   로그인 오버레이 — TRLOY 디자인 시스템 적용
+   ================================================= */
+
+/* -------------------------------------------------
+   전체화면 오버레이
+   ------------------------------------------------- */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--color-bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.auth-overlay.hidden {
+  display: none;
+}
+
+/* -------------------------------------------------
+   카드
+   ------------------------------------------------- */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* -------------------------------------------------
+   브랜드 영역
+   ------------------------------------------------- */
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-8);
+}
+
+.auth-logo {
+  font-family: var(--font-en);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.auth-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 14px;
+  background-color: var(--color-terracotta-bg);
+  border: 1px solid rgba(194, 84, 80, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-terracotta);
+  letter-spacing: 0.04em;
+}
+
+.auth-tag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-terracotta);
+  animation: authTagPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes authTagPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.7); }
+}
+
+/* -------------------------------------------------
+   폼 컨테이너 — settings-card 동일 스타일
+   ------------------------------------------------- */
+.auth-form-wrap {
+  width: 100%;
+  background-color: var(--color-bg-elevated);
+  border: 0.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.auth-form-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-5);
+}
+
+/* -------------------------------------------------
+   라벨 + 인풋 — settings.css #api-key-input 동일
+   ------------------------------------------------- */
+.auth-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-1);
+  letter-spacing: 0.01em;
+}
+
+.auth-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--space-4);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  margin-bottom: var(--space-4);
+  display: block;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-focus);
+}
+
+.auth-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.auth-input.error {
+  border-color: var(--color-danger);
+}
+
+/* -------------------------------------------------
+   에러
+   ------------------------------------------------- */
+.auth-error {
+  font-size: 12px;
+  color: var(--color-danger);
+  margin-top: calc(var(--space-1) * -1);
+  margin-bottom: var(--space-3);
+  line-height: 1.5;
+}
+
+.auth-error.hidden {
+  display: none;
+}
+
+/* -------------------------------------------------
+   로그인 버튼 — btn-primary 동일
+   ------------------------------------------------- */
+.auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  margin-top: var(--space-2);
+  background-color: var(--color-text-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.auth-btn:hover:not(:disabled) {
+  background-color: #1A1A1E;
+}
+
+.auth-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.auth-btn:disabled {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-tertiary);
+  cursor: not-allowed;
+}
+
+/* -------------------------------------------------
+   하단 힌트
+   ------------------------------------------------- */
+.auth-hint {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  margin-top: var(--space-4);
+  line-height: 1.6;
+}
+
+/* -------------------------------------------------
+   헤더 유저 뱃지
+   ------------------------------------------------- */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.user-badge-email {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-logout {
+  font-size: 11px;
+  font-family: var(--font-sans);
+  color: var(--color-text-tertiary);
+  background: none;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 3px 9px;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn-logout:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+
+/* -------------------------------------------------
+   모바일
+   ------------------------------------------------- */
+@media (max-width: 480px) {
+  .auth-form-wrap {
+    padding: var(--space-5);
+  }
+
+  .auth-logo {
+    font-size: 24px;
+  }
+}

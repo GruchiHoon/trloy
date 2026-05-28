@@ -3,6 +3,19 @@
    전역 상수 · API 설정 · 저장소 키
    ================================================= */
 
+/* =================================================
+   Firebase 설정
+   ================================================= */
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyA05hmrkqb-cMtERcSKfTjsh5TTnd-yBjo",
+  authDomain:        "t51xtroy.firebaseapp.com",
+  projectId:         "t51xtroy",
+  storageBucket:     "t51xtroy.firebasestorage.app",
+  messagingSenderId: "332659460727",
+  appId:             "1:332659460727:web:151b29c024cbc73e0d9472",
+  measurementId:     "G-NS37CJH853",
+};
+
 /* 저장소 키 — API 키는 localStorage(탭 공유), 결과는 sessionStorage(탭 독립) */
 const STORAGE_KEY_API = 'trloy_anthropic_key';
 const STORAGE_KEY_LAST = 'trloy_last_result';

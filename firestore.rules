@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 본인 데이터만 읽기/쓰기 가능
+    // 가입은 Firebase Console에서 직접 추가 (앱 내 회원가입 없음)
+
+    match /drafts/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /history/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // 그 외 모든 접근 차단
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
